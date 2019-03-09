@@ -27,4 +27,5 @@ sudo chown -R centos:centos /home/centos/lightsail-openvpn-as/
 sudo chcon -Rt svirt_sandbox_file_t /home/centos
 restorecon -FRvv ~/.ssh
 
-/usr/local/bin/docker-compose -f /home/centos/lightsail-openvpn-as/docker-compose.yml up -d
+cd /home/centos/lightsail-openvpn-as/
+/usr/local/bin/docker-compose up -d
