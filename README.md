@@ -9,7 +9,8 @@ aws lightsail create-instances --instance-names "lightsail-eu-central-vm" --avai
 You can find the script in `/var/lib/cloud/instance/user-data.txt` on the instance
 
 ## configure instance - open ports
+```
 aws lightsail open-instance-public-ports --port-info fromPort=443,toPort=443,protocol=TCP --instance-name lightsail-eu-central-vm
 aws lightsail open-instance-public-ports --port-info fromPort=1194,toPort=1194,protocol=UDP --instance-name lightsail-eu-central-vm
-
+```
 
