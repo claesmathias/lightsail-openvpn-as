@@ -1,0 +1,110 @@
+version: '3'
+
+services:
+
+#
+# letsencrypt
+# This container sets up an Nginx webserver and reverse proxy with php support 
+# and a built-in letsencrypt client that automates free SSL server certificate generation and renewal processes. 
+# It also contains fail2ban for intrusion prevention.
+#
+  letsencrypt:
+    image: linuxserver/letsencrypt
+    container_name: letsencrypt
+    privileged: true
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - EMAIL=${EMAIL}
+      - URL=${URL}
+      - DHLEVEL=2048
+      - TZ=${TZ}
+      - VALIDATION=http
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - $HOME/letsencrypt:/config
+    depends_on:
+      - "duckdns"
+    networks:
+      - app_net
+    healthcheck:
+     test: ["CMD-SHELL", "curl -f --insecure https://localhost && echo 'OK'"]
+     interval: 5s
+     timeout: 2s
+     retries: 20
+
+#
+# duckdns
+# Duckdns is a free service which will point a DNS (sub domains of duckdns.org) to an IP of your choice. 
+# The service is completely free, and doesn't require reactivation or forum posts to maintain its existence.
+#
+  duckdns:
+    image: linuxserver/duckdns
+    container_name: duckdns
+    restart: always
+    environment:
+      - PUID=1000 #optional
+      - PGID=1000 #optional
+      - TZ=${TZ}
+      - SUBDOMAINS=${URL}
+      - TOKEN=${TOKEN}
+      - LOG_FILE=false #optional
+    volumes:
+      - $HOME/duckdns:/config #optional
+
+#
+# openvpn-as 
+# OpenVPN Access Server is a full featured secure network tunneling VPN software solution that integrates OpenVPN server capabilities,
+# enterprise management capabilities, simplified OpenVPN Connect UI, and OpenVPN Client software packages that accommodate
+# Windows, MAC, Linux, Android, and iOS environments. OpenVPN Access Server supports a wide range of configurations, 
+# including secure and granular remote access to internal network and/ or private cloud network resources and applications with fine-grained access control.
+#
+  openvpn-as:
+    image: linuxserver/openvpn-as
+    container_name: openvpn-as
+    privileged: true
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - INTERFACE=eth0 #optional
+    volumes:
+      - $HOME/openvpn-as:/config
+    ports:
+      - 943:943
+      - 9443:9443
+      - 1194:1194/udp
+    networks:
+      - app_net
+
+#
+# watchtower
+# Watchtower is an application that will monitor your running Docker containers and watch for changes to the images that those containers were originally started from.
+# If watchtower detects that an image has changed, it will automatically restart the container using the new image.
+#
+  watchtower:
+    image: v2tec/watchtower
+    container_name: watchtower
+    privileged: true
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --cleanup
+#
+# networking
+#
+networks:
+  app_net:
+    driver: bridge
+    ipam:
+     driver: default
+     config:
+      - subnet: 172.20.0.0/16
