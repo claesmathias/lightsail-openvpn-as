@@ -2,7 +2,7 @@
 Run OpenVPN-AS on Amazon Lightsail with Duck DNS
 
 ## edit config
-edit the following lines in `user-data.txt` 
+Edit the following lines in `user-data.txt` 
 ```
 EMAIL=example@mail.com
 URL=example.duckns.org
