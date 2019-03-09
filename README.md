@@ -1,7 +1,7 @@
 # lightsail-openvpn-as
 Run OpenVPN-AS on Amazon Lightsail with Duck DNS
 
-## edit config
+## Edit config
 Edit the following lines in `user-data.txt` 
 ```
 EMAIL=example@mail.com
@@ -10,29 +10,32 @@ TOKEN=duck-dns-token
 TZ=Europe/Brussels
 ```
 
-## create instance
+## Create instance
 Create AWS Lightsail instance via [AWS Lightsail CLI](https://docs.aws.amazon.com/cli/latest/reference/lightsail/index.html "AWS Lightsail CLI")
 ```
 aws lightsail create-instances --instance-names "lightsail-eu-central-vm" --availability-zone eu-central-1a --blueprint-id centos_7_1805_01 --bundle-id nano_2_0 --user-data file://ud.txt
 ```
 You can find the script in `/var/lib/cloud/instance/user-data.txt` on the instance
 
-## configure instance - open ports
+## Configure instance - open ports
 ```
 aws lightsail open-instance-public-ports --port-info fromPort=443,toPort=443,protocol=TCP --instance-name lightsail-eu-central-vm
 aws lightsail open-instance-public-ports --port-info fromPort=1194,toPort=1194,protocol=UDP --instance-name lightsail-eu-central-vm
 ```
 
-## aftercare
-download the key file [here](https://lightsail.aws.amazon.com/ls/webapp/account/keys "AWS Lightsail keys")
+## Aftercare
+Download the key file [here](https://lightsail.aws.amazon.com/ls/webapp/account/keys "AWS Lightsail keys")
 ```
 chmod 600 LightsailDefaultKey-eu-central-1.pem 
 ```
-obtain the public IP
+Obtain the public IP
 ```
 aws lightsail get-instance --instance-name lightsail-eu-central-vm | grep publicIpAddress
 ```
-login to your instance
+Login to your instance
 ```
 ssh -i LightsailDefaultKey-eu-central-1.pem  centos@PUBLIC_IP
 ```
+
+## Application Setup
+The admin interface is available at ` https://yoursubdomain.duckdns.org/admin` with a default user/password of admin/password
