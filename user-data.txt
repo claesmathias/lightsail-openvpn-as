@@ -1,0 +1,30 @@
+#!/bin/bash
+sudo yum update -y
+sudo yum install docker -y
+
+sudo groupadd docker
+sudo usermod -aG docker centos
+
+sudo systemctl enable docker.service
+sudo systemctl start docker.service
+
+sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+sudo mkdir /home/centos/lightsail-openvpn-as/
+sudo curl https://raw.githubusercontent.com/claesmathias/lightsail-openvpn-as/master/docker-compose.yml -o /home/centos/lightsail-openvpn-as/docker-compose.yml
+sudo curl https://raw.githubusercontent.com/claesmathias/lightsail-openvpn-as/master/nginx -o /home/centos/lightsail-openvpn-as/nginx
+
+cat <<EOF >/home/centos/lightsail-openvpn-as/.env
+EMAIL=FILL_IN
+URL=FILL_IN
+TOKEN=FILL_IN
+TZ=Europe/Brussels
+EOF
+
+sudo chown -R centos:centos /home/centos/lightsail-openvpn-as/
+
+sudo chcon -Rt svirt_sandbox_file_t /home/centos
+restorecon -FRvv ~/.ssh
+
+/usr/local/bin/docker-compose -f /home/centos/lightsail-openvpn-as/docker-compose.yml up -d
