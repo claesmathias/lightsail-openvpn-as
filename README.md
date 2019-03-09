@@ -23,3 +23,16 @@ aws lightsail open-instance-public-ports --port-info fromPort=443,toPort=443,pro
 aws lightsail open-instance-public-ports --port-info fromPort=1194,toPort=1194,protocol=UDP --instance-name lightsail-eu-central-vm
 ```
 
+## aftercare
+download the key file [here](https://lightsail.aws.amazon.com/ls/webapp/account/keys "AWS Lightsail keys")
+```
+chmod 600 LightsailDefaultKey-eu-central-1.pem 
+```
+obtain the public IP
+```
+aws lightsail get-instance --instance-name lightsail-eu-central-vm | grep publicIpAddress
+```
+login to your instance
+```
+ssh -i LightsailDefaultKey-eu-central-1.pem  centos@PUBLIC_IP
+```
