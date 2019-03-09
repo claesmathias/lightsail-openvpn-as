@@ -1,5 +1,12 @@
 # lightsail-openvpn-as
-Run OpenVPN-AS on Amazon Lightsail
+Run OpenVPN-AS on Amazon Lightsail with Duck DNS
+
+## edit config
+edit 'user-data.txt'
+EMAIL=example@mail.com
+URL=example.duckns.org
+TOKEN=duck-dns-token
+TZ=Europe/Brussels
 
 ## create instance
 Create AWS Lightsail instance via [AWS Lightsail CLI](https://docs.aws.amazon.com/cli/latest/reference/lightsail/index.html "AWS Lightsail CLI")
