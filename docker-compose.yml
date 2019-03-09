@@ -27,8 +27,8 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - $HOME/letsencrypt:/config
-      - $HOME/lightsail-openvpn-as/nginx:/config/nginx/site-confs/default
+      - /home/centos/letsencrypt:/config
+      - /home/centos/lightsail-openvpn-as/nginx:/config/nginx/site-confs/default
     depends_on:
       - "duckdns"
     networks:
@@ -76,7 +76,7 @@ services:
       - TZ=${TZ}
       - INTERFACE=eth0 #optional
     volumes:
-      - $HOME/openvpn-as:/config
+      - /home/centos/openvpn-as:/config
     ports:
       - 9443:9443
       - 1194:1194/udp
