@@ -80,7 +80,6 @@ services:
     volumes:
       - $HOME/openvpn-as:/config
     ports:
-      - 943:943
       - 9443:9443
       - 1194:1194/udp
     networks:
