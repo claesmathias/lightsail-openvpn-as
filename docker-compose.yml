@@ -55,8 +55,6 @@ services:
       - SUBDOMAINS=${URL}
       - TOKEN=${TOKEN}
       - LOG_FILE=false #optional
-    volumes:
-      - $HOME/duckdns:/config #optional
 
 #
 # openvpn-as 
