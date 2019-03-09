@@ -28,6 +28,7 @@ services:
       - 443:443
     volumes:
       - $HOME/letsencrypt:/config
+      - $HOME/lightsail-openvpn-as/nginx:/config/nginx/site-confs/default
     depends_on:
       - "duckdns"
     networks:
@@ -98,6 +99,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --cleanup
+
 #
 # networking
 #
