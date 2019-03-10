@@ -5,7 +5,7 @@ Run OpenVPN-AS on Amazon Lightsail with Duck DNS
 Edit the following lines in `user-data.txt` 
 ```
 EMAIL=example@mail.com
-URL=example.duckns.org
+URL=yoursubdomain.duckns.org
 TOKEN=duck-dns-token
 TZ=Europe/Brussels
 ```
@@ -24,7 +24,7 @@ aws lightsail open-instance-public-ports --port-info fromPort=1194,toPort=1194,p
 ```
 
 ## Application Setup
-The admin interface is available at ` https://yoursubdomain.duckdns.org/admin` with a default user/password of admin/password
+The admin interface is available at https://yoursubdomain.duckdns.org/admin with a default user/password of admin/password
 
 hostname:
 ```
