@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo yum update -y
-sudo yum install docker httpd-tools -y
+sudo yum install docker -y
 
 sudo groupadd docker
 sudo usermod -aG docker centos
@@ -24,10 +24,11 @@ EOF
 
 sudo chown -R centos:centos /home/centos/lightsail-openvpn-as/
 
-htpasswd -nb -B admin password | cut -d ":" -f 2 >> /home/centos/lightsail-openvpn-as/portainer_secret.txt
-
 sudo chcon -Rt svirt_sandbox_file_t /home/centos
 restorecon -FRvv ~/.ssh
 
+echo -n password > /home/centos/lightsail-openvpn-as/portainer_secret.txt
+
 cd /home/centos/lightsail-openvpn-as/
 /usr/local/bin/docker-compose up -d
+
