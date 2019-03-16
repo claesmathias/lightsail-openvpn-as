@@ -31,6 +31,7 @@ services:
       - /home/centos/lightsail-openvpn-as/nginx:/config/nginx/site-confs/default
     depends_on:
       - "duckdns"
+      - "portainer"
     networks:
       - app_net
     healthcheck:
