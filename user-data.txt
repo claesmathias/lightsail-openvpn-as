@@ -16,9 +16,9 @@ sudo curl https://raw.githubusercontent.com/claesmathias/lightsail-openvpn-as/ma
 sudo curl https://raw.githubusercontent.com/claesmathias/lightsail-openvpn-as/master/nginx -o /home/centos/lightsail-openvpn-as/nginx
 
 cat <<EOF >/home/centos/lightsail-openvpn-as/.env
-EMAIL=claesmathias@gmail.com
-URL=lightsail-vpn.duckdns.org
-TOKEN=9fbe0878-82a5-47b4-8739-645f4fd8072f
+EMAIL=FILL_IN
+URL=FILL_IN.duckdns.org
+TOKEN=FILL_IN
 TZ=Europe/Brussels
 EOF
 
