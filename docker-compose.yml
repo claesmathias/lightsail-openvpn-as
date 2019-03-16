@@ -1,4 +1,4 @@
-version: '3'
+version: '3.6'
 
 services:
 
@@ -114,6 +114,13 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --cleanup
+
+#
+# secrets
+#
+secrets:
+  portainer_secret:
+    file: ./portainer_secret.txt
 
 #
 # networking
