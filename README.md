@@ -8,6 +8,8 @@ EMAIL=example@mail.com
 URL=yoursubdomain.duckns.org
 TOKEN=duck-dns-token
 TZ=Europe/Brussels
+
+echo -n password > /home/centos/lightsail-openvpn-as/portainer_secret.txt
 ```
 
 ## Create instance
@@ -58,6 +60,10 @@ secondary: 8.8.4.4
 ```
 
 ## Aftercare
+### Portainer - docker user interface
+View containers https://yoursubdomain.duckdns.org/portainer
+
+### SSH
 Download the key file [here](https://lightsail.aws.amazon.com/ls/webapp/account/keys "AWS Lightsail keys")
 ```
 chmod 600 LightsailDefaultKey-eu-central-1.pem 
