@@ -17,10 +17,17 @@ aws lightsail create-instances --instance-names "lightsail-eu-central-vm" --avai
 ```
 You can find the script in `/var/lib/cloud/instance/user-data.txt` on the instance
 
-## Configure instance - open ports
+## Configure instance
+### Open ports
 ```
 aws lightsail open-instance-public-ports --port-info fromPort=443,toPort=443,protocol=TCP --instance-name lightsail-eu-central-vm
 aws lightsail open-instance-public-ports --port-info fromPort=1194,toPort=1194,protocol=UDP --instance-name lightsail-eu-central-vm
+```
+### Assign static IP (optional)
+Static IP addresses are free only while attached to an instance. You can manage five at no additional cost.
+```
+aws lightsail allocate-static-ip --static-ip-name lightsail-eu-central-vm-static-ip
+aws lightsail attach-static-ip --static-ip-name lightsail-eu-central-vm-static-ip --instance-name lightsail-eu-central-vm
 ```
 
 ## Application Setup
@@ -61,3 +68,5 @@ Login to your instance
 ```
 ssh -i LightsailDefaultKey-eu-central-1.pem  centos@PUBLIC_IP
 ```
+View instances [here](https://lightsail.aws.amazon.com/ls/webapp/home/instances "View instances")
+
