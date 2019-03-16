@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo yum update -y
-sudo yum install docker -y
+sudo yum install docker httpd-tools -y
 
 sudo groupadd docker
 sudo usermod -aG docker centos
@@ -16,13 +16,15 @@ sudo curl https://raw.githubusercontent.com/claesmathias/lightsail-openvpn-as/ma
 sudo curl https://raw.githubusercontent.com/claesmathias/lightsail-openvpn-as/master/nginx -o /home/centos/lightsail-openvpn-as/nginx
 
 cat <<EOF >/home/centos/lightsail-openvpn-as/.env
-EMAIL=FILL_IN
-URL=FILL_IN
-TOKEN=FILL_IN
+EMAIL=claesmathias@gmail.com
+URL=lightsail-vpn.duckdns.org
+TOKEN=9fbe0878-82a5-47b4-8739-645f4fd8072f
 TZ=Europe/Brussels
 EOF
 
 sudo chown -R centos:centos /home/centos/lightsail-openvpn-as/
+
+htpasswd -nb -B admin password | cut -d ":" -f 2 >> /home/centos/lightsail-openvpn-as/portainer_secret.txt
 
 sudo chcon -Rt svirt_sandbox_file_t /home/centos
 restorecon -FRvv ~/.ssh
