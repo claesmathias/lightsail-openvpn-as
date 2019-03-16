@@ -28,6 +28,7 @@ Static IP addresses are free only while attached to an instance. You can manage 
 ```
 aws lightsail allocate-static-ip --static-ip-name lightsail-eu-central-vm-static-ip
 aws lightsail attach-static-ip --static-ip-name lightsail-eu-central-vm-static-ip --instance-name lightsail-eu-central-vm
+aws lightsail get-static-ip --static-ip-name lightsail-eu-central-vm-static-ip | grep ipAddress
 ```
 
 ## Application Setup
